@@ -13,11 +13,21 @@ import SnapKit
 final class VocaViewController: UIViewController {
     
     // MARK: - UI Components
+    private lazy var separatorView = UIView().then {
+        $0.backgroundColor = .separator
+    }
     private lazy var introView = IntroView(episodeType: .voca).then {
         $0.delegate = self
     }
     private lazy var selectVocaView = SelectVocaView(vocaQnASets: VocaQnASet.MOCK_DATA).then {
         $0.delegate = self
+    }
+    private var resultVocaView: ResultVocaView? {
+        didSet {
+            if resultVocaView != nil {
+                resultVocaView?.delegate = self
+            }
+        }
     }
     
     // MARK: - Properties
@@ -35,10 +45,47 @@ extension VocaViewController {
 // MARK: - Main Methods
 extension VocaViewController {
     @objc func didTapSettingBarButton() {
-        selectVocaView.currentQnAIndex = 0
-        navigationItem.title = "Voca \(selectVocaView.currentQnAIndex + 1) of \(VocaQnASet.MOCK_DATA.count)"
-        selectVocaView.resetChoiceButtonStackView()
-        selectVocaView.setupVocaQnASet()
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let introAction = UIAlertAction(title: "인트로", style: .default) { _ in
+            self.removeView(self.introView)
+            self.removeView(self.selectVocaView)
+            if let resultVocaView = self.resultVocaView {
+                self.removeView(resultVocaView)
+            }
+            self.setupView(self.introView)
+            self.navigationItem.title = ""
+            self.separatorView.removeFromSuperview()
+        }
+        let selectVocaAction = UIAlertAction(title: "문제풀이", style: .default) { _ in
+            self.removeView(self.introView)
+            self.removeView(self.selectVocaView)
+            if let resultVocaView = self.resultVocaView {
+                self.removeView(resultVocaView)
+            }
+            self.setupView(self.selectVocaView)
+            self.selectVocaView.resetChoiceButtonStackView()
+            self.selectVocaView.currentQnAIndex = 0
+            self.selectVocaView.setupVocaQnASet()
+            self.setupNavigationBarBorderBottom()
+            self.navigationItem.title = "Voca 1 of \(VocaQnASet.MOCK_DATA.count)"
+        }
+        let resultVocaAction = UIAlertAction(title: "결과", style: .default) { _ in
+            self.removeView(self.introView)
+            self.removeView(self.selectVocaView)
+            if let resultVocaView = self.resultVocaView {
+                self.removeView(resultVocaView)
+                
+            }
+            self.setupView(ResultVocaView(result: VocaQnASet.MOCK_DATA))
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        
+        [introAction, selectVocaAction, resultVocaAction, cancelAction].forEach {
+            alertController.addAction($0)
+        }
+        
+        present(alertController, animated: true)
     }
 }
 
@@ -61,9 +108,6 @@ extension VocaViewController {
         navigationItem.rightBarButtonItem = settingBarButton
     }
     func setupNavigationBarBorderBottom() {
-        let separatorView = UIView().then {
-            $0.backgroundColor = .separator
-        }
         navigationController?.navigationBar.addSubview(separatorView)
         separatorView.snp.makeConstraints {
             $0.height.equalTo(0.4)
@@ -80,7 +124,7 @@ extension VocaViewController {
     }
     func removeView(_ v: StudyModeView) {
         guard let v = v as? UIView else { return }
-        view.willRemoveSubview(v)
+        v.removeFromSuperview()
     }
 }
 
@@ -89,17 +133,38 @@ extension VocaViewController: IntroViewDelegate {
     func introView(_ intro: IntroView, start didTapButton: UIButton) {
         removeView(introView)
         setupView(selectVocaView)
+        selectVocaView.resetChoiceButtonStackView() // test 
         selectVocaView.setupVocaQnASet()
         setupNavigationBarBorderBottom()
         navigationItem.title = "Voca \(selectVocaView.currentQnAIndex + 1) of \(VocaQnASet.MOCK_DATA.count)"
     }
 }
+
 extension VocaViewController: SelectVocaViewDelegate {
-    func selectVocaView(selectVoca: SelectVocaView, didEnd results: [VocaQnASet]) {
-        print(results)
+    func selectVocaView(selectVoca: SelectVocaView, didEnd result: [VocaQnASet]) {
+        resultVocaView = ResultVocaView(result: result)
+        if let resultVocaView = resultVocaView {
+            removeView(selectVocaView)
+            setupView(resultVocaView)
+        }
     }
     
     func selectVocaView(selectVoca: SelectVocaView, moveToNextStep currentQnAIndex: Int) {
         navigationItem.title = "Voca \(currentQnAIndex + 1) of \(VocaQnASet.MOCK_DATA.count)"
+    }
+}
+
+extension VocaViewController: ResultVocaViewDelegate {
+    func resultVocaView(resultVoca: ResultVocaView, retry retryButton: UIButton) {
+        removeView(resultVoca)
+        setupView(selectVocaView)
+        selectVocaView.resetChoiceButtonStackView()
+        selectVocaView.currentQnAIndex = 0
+        selectVocaView.setupVocaQnASet()
+        navigationItem.title = "Voca \(selectVocaView.currentQnAIndex + 1) of \(VocaQnASet.MOCK_DATA.count)"
+    }
+    
+    func resultVocaView(resultVoca: ResultVocaView, moveToNextStep nextButton: UIButton) {
+        print("계속하기")
     }
 }

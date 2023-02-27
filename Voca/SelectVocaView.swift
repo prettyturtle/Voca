@@ -13,7 +13,7 @@ import SnapKit
 
 protocol SelectVocaViewDelegate: AnyObject {
     func selectVocaView(selectVoca: SelectVocaView, moveToNextStep currentQnAIndex: Int)
-    func selectVocaView(selectVoca: SelectVocaView, didEnd results: [VocaQnASet])
+    func selectVocaView(selectVoca: SelectVocaView, didEnd result: [VocaQnASet])
 }
 
 final class SelectVocaView: UIView, StudyModeView {
@@ -32,7 +32,7 @@ final class SelectVocaView: UIView, StudyModeView {
         setupView()
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord)
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetoothA2DP, .allowBluetooth])
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             return
@@ -123,7 +123,8 @@ final class SelectVocaView: UIView, StudyModeView {
     }
     
     func playStandard() {
-        let standardURLString = "https://t1.daumcdn.net/cfile/tistory/995FA1335CDE8FD41D"
+        let standardURLString = "https://t1.daumcdn.net/cfile/tistory/99776F355CDE891324"
+//        let standardURLString = ""
         guard let standardURL = URL(string: standardURLString) else {
             moveToNextStep()
             return
@@ -189,7 +190,7 @@ extension SelectVocaView: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         
         if player == fxPlayer { // 효과음 재생이 끝났을 때
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 self.playStandard()
             }
         } else if player == standardPlayer { // 원어민 재생이 끝났을 때
