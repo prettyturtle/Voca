@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 import Then
 import SnapKit
@@ -18,6 +19,9 @@ protocol ResultVocaViewDelegate: AnyObject {
 final class ResultVocaView: UIView, StudyModeView {
     
     let result: [VocaQnASet]
+    
+    var standardPlayer: AVAudioPlayer?
+    var currentStandardPlayButton: UIButton?
     
     weak var delegate: ResultVocaViewDelegate?
     
@@ -127,9 +131,39 @@ extension ResultVocaView: UITableViewDataSource {
 
 extension ResultVocaView: ResultVocaTableViewCellDelegate {
     func resultVocaTableViewCell(cell: ResultVocaTableViewCell, playStandard button: UIButton) {
-        cell.setupIsPlayingStandard(isPlaying: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            cell.setupIsPlayingStandard(isPlaying: false)
+        if let player = standardPlayer,
+           let currentPlayButton = currentStandardPlayButton {
+            if player.isPlaying {
+                player.stop()
+                ResultVocaTableViewCell.setupIsPlayingStandard(isPlaying: false, button: currentPlayButton)
+            }
         }
+        
+        let standardURLString = "https://t1.daumcdn.net/cfile/tistory/99776F355CDE891324"
+        
+        guard let standardURL = URL(string: standardURLString) else { return }
+        
+        ResultVocaTableViewCell.setupIsPlayingStandard(isPlaying: true, button: button)
+        
+        Task {
+            let (data, _) = try await URLSession.shared.data(from: standardURL)
+            
+            standardPlayer = try AVAudioPlayer(data: data)
+            standardPlayer?.delegate = self
+            standardPlayer?.prepareToPlay()
+            standardPlayer?.play()
+        }
+        
+        currentStandardPlayButton = button
+    }
+}
+
+extension ResultVocaView: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if let currentStandardPlayButton = currentStandardPlayButton {
+            ResultVocaTableViewCell.setupIsPlayingStandard(isPlaying: false, button: currentStandardPlayButton)
+        }
+        standardPlayer = nil
+        currentStandardPlayButton = nil
     }
 }

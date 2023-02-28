@@ -43,10 +43,10 @@ final class ResultVocaTableViewCell: UITableViewCell, CellIdentifiable {
         $0.clipsToBounds = true
     }
     
-    func setupIsPlayingStandard(isPlaying: Bool) {
+    static func setupIsPlayingStandard(isPlaying: Bool, button: UIButton) {
         let imageName = isPlaying ? "speaker.wave.2.fill" : "speaker.wave.2"
-        standardPlayButton.setImage(UIImage(systemName: imageName), for: .normal)
-        standardPlayButton.tintColor = isPlaying ? .systemOrange : .secondaryLabel
+        button.setImage(UIImage(systemName: imageName), for: .normal)
+        button.tintColor = isPlaying ? .systemOrange : .secondaryLabel
     }
     
     func setupData(resultItem: VocaQnASet) {
