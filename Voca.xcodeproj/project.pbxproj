@@ -30,6 +30,8 @@
 		6B29BD7629AA870700F39932 /* ResultVocaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BD7529AA870700F39932 /* ResultVocaView.swift */; };
 		6B29BD7829AB7E5C00F39932 /* ResultVocaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BD7729AB7E5C00F39932 /* ResultVocaTableViewCell.swift */; };
 		6B29BD7A29AB7E7600F39932 /* CellIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BD7929AB7E7600F39932 /* CellIdentifiable.swift */; };
+		6B29BDA429AE698900F39932 /* VideoVocaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDA329AE698900F39932 /* VideoVocaView.swift */; };
+		6B29BDA629AF458900F39932 /* VideoModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDA529AF458900F39932 /* VideoModuleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,8 @@
 		6B29BD7529AA870700F39932 /* ResultVocaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVocaView.swift; sourceTree = "<group>"; };
 		6B29BD7729AB7E5C00F39932 /* ResultVocaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVocaTableViewCell.swift; sourceTree = "<group>"; };
 		6B29BD7929AB7E7600F39932 /* CellIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifiable.swift; sourceTree = "<group>"; };
+		6B29BDA329AE698900F39932 /* VideoVocaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVocaView.swift; sourceTree = "<group>"; };
+		6B29BDA529AF458900F39932 /* VideoModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModuleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +136,9 @@
 				6B29BD2E29A92ADA00F39932 /* SceneDelegate.swift */,
 				6B29BD3029A92ADA00F39932 /* VocaViewController.swift */,
 				6B29BD6829AA186B00F39932 /* SelectVocaView.swift */,
+				6B29BDA329AE698900F39932 /* VideoVocaView.swift */,
 				6B29BD7529AA870700F39932 /* ResultVocaView.swift */,
+				6B29BDA529AF458900F39932 /* VideoModuleView.swift */,
 				6B29BD7929AB7E7600F39932 /* CellIdentifiable.swift */,
 				6B29BD7729AB7E5C00F39932 /* ResultVocaTableViewCell.swift */,
 				6B29BD6E29AA605F00F39932 /* ChoiceButton.swift */,
@@ -316,9 +322,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B29BDA629AF458900F39932 /* VideoModuleView.swift in Sources */,
 				6B29BD7A29AB7E7600F39932 /* CellIdentifiable.swift in Sources */,
 				6B29BD3129A92ADA00F39932 /* VocaViewController.swift in Sources */,
 				6B29BD2D29A92ADA00F39932 /* AppDelegate.swift in Sources */,
+				6B29BDA429AE698900F39932 /* VideoVocaView.swift in Sources */,
 				6B29BD6F29AA605F00F39932 /* ChoiceButton.swift in Sources */,
 				6B29BD7829AB7E5C00F39932 /* ResultVocaTableViewCell.swift in Sources */,
 				6B29BD5D29A92F1D00F39932 /* IntroView.swift in Sources */,
@@ -512,6 +520,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -539,6 +548,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

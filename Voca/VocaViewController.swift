@@ -131,12 +131,17 @@ extension VocaViewController {
 // MARK: - Delegate Methods
 extension VocaViewController: IntroViewDelegate {
     func introView(_ intro: IntroView, start didTapButton: UIButton) {
+//        removeView(introView)
+//        setupView(selectVocaView)
+//        selectVocaView.resetChoiceButtonStackView() // test
+//        selectVocaView.setupVocaQnASet()
+//        setupNavigationBarBorderBottom()
+//        navigationItem.title = "Voca \(selectVocaView.currentQnAIndex + 1) of \(VocaQnASet.MOCK_DATA.count)"
+        
+        
         removeView(introView)
-        setupView(selectVocaView)
-        selectVocaView.resetChoiceButtonStackView() // test 
-        selectVocaView.setupVocaQnASet()
-        setupNavigationBarBorderBottom()
-        navigationItem.title = "Voca \(selectVocaView.currentQnAIndex + 1) of \(VocaQnASet.MOCK_DATA.count)"
+        let videoView = VideoVocaView(videoURLString: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+        setupView(videoView)
     }
 }
 
