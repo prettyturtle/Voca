@@ -52,9 +52,7 @@ final class VideoModuleView: UIView {
         
         layer.addSublayer(avPlayerLayer)
         
-        avPlayerLayer.frame = bounds
-        
-        let interval = CMTime(seconds: 0.01, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        let interval = CMTime(value: 1, timescale: 100)
         avPlayer?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: { [weak self] currentTime in
             guard let self = self else {
                 self?.delegate?.videoModuleView(moduleView: self, occurAnyError: .setupVideoPlayerFail)
@@ -63,6 +61,10 @@ final class VideoModuleView: UIView {
             
             self.delegate?.videoModuleView(moduleView: self, observe: currentTime)
         })
+    }
+    
+    func setupVideoPlayerLayer() {
+        avPlayerLayer.frame = bounds
     }
     
     func play() {

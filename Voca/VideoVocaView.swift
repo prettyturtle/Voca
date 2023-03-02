@@ -27,6 +27,7 @@ final class VideoVocaView: UIView, StudyModeView {
     var seekValue = 5.0
     
     private lazy var videoModuleView = VideoModuleView(videoURLString: videoURLString).then {
+        $0.setupVideoPlayer()
         $0.delegate = self
     }
     private lazy var videoSliderView = UISlider().then {
@@ -69,9 +70,10 @@ final class VideoVocaView: UIView, StudyModeView {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        videoModuleView.setupVideoPlayer()
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+        
+        videoModuleView.setupVideoPlayerLayer()
     }
     
     func setupView() {
@@ -149,7 +151,16 @@ extension VideoVocaView: VideoModuleViewDelegate {
         let current = CMTimeGetSeconds(currentTime)
         let sliderValue = Float(current / totalTime)
         
+        let secondsString = String(format: "%02d", Int(current) % 60)
+        let miniteString = String(format: "%02d", Int(current) / 60)
+        
         videoSliderView.value = sliderValue
-//        currentSliderValueLabel.text = "\(current)"
+        currentSliderValueLabel.text = "\(miniteString):\(secondsString)"
+        
+        if !totalTime.isNaN {
+            let totalSecondsString = String(format: "%02d", Int(totalTime) % 60)
+            let totalMiniteString = String(format: "%02d", Int(totalTime) / 60)
+            totalSliderValueLabel.text = "\(totalMiniteString):\(totalSecondsString)"
+        }
     }
 }
