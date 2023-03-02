@@ -18,6 +18,7 @@ enum VideoModuleError: Error {
 protocol VideoModuleViewDelegate: AnyObject {
     func videoModuleView(moduleView: VideoModuleView?, occurAnyError: VideoModuleError)
     func videoModuleView(moduleView: VideoModuleView, observe currentTime: CMTime)
+    func videoModuleView(moduleView: VideoModuleView, didEndPlayer: Void)
 }
 
 final class VideoModuleView: UIView {
@@ -61,6 +62,13 @@ final class VideoModuleView: UIView {
             
             self.delegate?.videoModuleView(moduleView: self, observe: currentTime)
         })
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didEndAVPlayer),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: avPlayer?.currentItem
+        )
     }
     
     func setupVideoPlayerLayer() {
@@ -102,11 +110,24 @@ final class VideoModuleView: UIView {
         avPlayer.seek(to: newTime)
     }
     
+    func seek(to: CMTime) {
+        guard let avPlayer = avPlayer else {
+            delegate?.videoModuleView(moduleView: self, occurAnyError: .setupVideoPlayerFail)
+            return
+        }
+        
+        avPlayer.seek(to: to)
+    }
+    
     func getDuration() -> CMTime? {
         guard let avPlayer = avPlayer else {
             delegate?.videoModuleView(moduleView: self, occurAnyError: .setupVideoPlayerFail)
             return nil
         }
         return avPlayer.currentItem?.duration
+    }
+    
+    @objc func didEndAVPlayer(_ playerItem: AVPlayerItem) {
+        delegate?.videoModuleView(moduleView: self, didEndPlayer: ())
     }
 }

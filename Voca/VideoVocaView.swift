@@ -32,6 +32,7 @@ final class VideoVocaView: UIView, StudyModeView {
     }
     private lazy var videoSliderView = UISlider().then {
         $0.tintColor = .systemPink
+        $0.addTarget(self, action: #selector(changeSliderValue), for: .valueChanged)
     }
     private lazy var currentSliderValueLabel = UILabel().then {
         $0.text = "00:00"
@@ -115,6 +116,14 @@ final class VideoVocaView: UIView, StudyModeView {
 }
 
 extension VideoVocaView {
+    @objc func changeSliderValue(_ sender: UISlider) {
+        guard let duration = videoModuleView.getDuration() else { return }
+        
+        let value = Float64(sender.value) * CMTimeGetSeconds(duration)
+        let seekTime = CMTime(value: CMTimeValue(value), timescale: 1)
+        
+        videoModuleView.seek(to: seekTime)
+    }
     @objc func didTapSeekButton(_ sender: UIButton) {
         if sender == prevSeekButton {
             videoModuleView.seek(to: -seekValue)
@@ -162,5 +171,10 @@ extension VideoVocaView: VideoModuleViewDelegate {
             let totalMiniteString = String(format: "%02d", Int(totalTime) / 60)
             totalSliderValueLabel.text = "\(totalMiniteString):\(totalSecondsString)"
         }
+    }
+    
+    func videoModuleView(moduleView: VideoModuleView, didEndPlayer: Void) {
+        playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        print(moduleView)
     }
 }
