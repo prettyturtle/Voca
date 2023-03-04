@@ -19,6 +19,9 @@ final class VocaViewController: UIViewController {
     private lazy var introView = IntroView(episodeType: .voca).then {
         $0.delegate = self
     }
+    private lazy var videoVocaView = VideoVocaView(videoURLString: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4").then {
+        $0.delegate = self
+    }
     private lazy var selectVocaView = SelectVocaView(vocaQnASets: VocaQnASet.MOCK_DATA).then {
         $0.delegate = self
     }
@@ -31,7 +34,11 @@ final class VocaViewController: UIViewController {
     }
     
     // MARK: - Properties
-    
+    var currentVideoRate: VideoRate = .default {
+        didSet {
+            videoVocaView.changeRate(to: currentVideoRate)
+        }
+    }
 }
 
 // MARK: - Life Cycle
@@ -46,42 +53,28 @@ extension VocaViewController {
 extension VocaViewController {
     @objc func didTapSettingBarButton() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let introAction = UIAlertAction(title: "인트로", style: .default) { _ in
-            self.removeView(self.introView)
-            self.removeView(self.selectVocaView)
-            if let resultVocaView = self.resultVocaView {
-                self.removeView(resultVocaView)
+        let rateAction = UIAlertAction(title: "재생 속도 \(currentVideoRate.text)", style: .default) { _ in
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            VideoRate.allCases.forEach { rate in
+                let action = UIAlertAction(title: rate.text, style: .default) { _ in
+                    self.currentVideoRate = rate
+                }
+                alert.addAction(action)
             }
-            self.setupView(self.introView)
-            self.navigationItem.title = ""
-            self.separatorView.removeFromSuperview()
-        }
-        let selectVocaAction = UIAlertAction(title: "문제풀이", style: .default) { _ in
-            self.removeView(self.introView)
-            self.removeView(self.selectVocaView)
-            if let resultVocaView = self.resultVocaView {
-                self.removeView(resultVocaView)
-            }
-            self.setupView(self.selectVocaView)
-            self.selectVocaView.resetChoiceButtonStackView()
-            self.selectVocaView.currentQnAIndex = 0
-            self.selectVocaView.setupVocaQnASet()
-            self.setupNavigationBarBorderBottom()
-            self.navigationItem.title = "Voca 1 of \(VocaQnASet.MOCK_DATA.count)"
-        }
-        let resultVocaAction = UIAlertAction(title: "결과", style: .default) { _ in
-            self.removeView(self.introView)
-            self.removeView(self.selectVocaView)
-            if let resultVocaView = self.resultVocaView {
-                self.removeView(resultVocaView)
-                
-            }
-            self.setupView(ResultVocaView(result: VocaQnASet.MOCK_DATA))
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+            
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         
-        [introAction, selectVocaAction, resultVocaAction, cancelAction].forEach {
+        [
+            rateAction,
+            cancelAction
+        ].forEach {
             alertController.addAction($0)
         }
         
@@ -131,17 +124,8 @@ extension VocaViewController {
 // MARK: - Delegate Methods
 extension VocaViewController: IntroViewDelegate {
     func introView(_ intro: IntroView, start didTapButton: UIButton) {
-//        removeView(introView)
-//        setupView(selectVocaView)
-//        selectVocaView.resetChoiceButtonStackView() // test
-//        selectVocaView.setupVocaQnASet()
-//        setupNavigationBarBorderBottom()
-//        navigationItem.title = "Voca \(selectVocaView.currentQnAIndex + 1) of \(VocaQnASet.MOCK_DATA.count)"
-        
-        
         removeView(introView)
-        let videoView = VideoVocaView(videoURLString: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-        setupView(videoView)
+        setupView(videoVocaView)
     }
 }
 
@@ -171,5 +155,19 @@ extension VocaViewController: ResultVocaViewDelegate {
     
     func resultVocaView(resultVoca: ResultVocaView, moveToNextStep nextButton: UIButton) {
         print("계속하기")
+    }
+}
+
+extension VocaViewController: VideoVocaViewDelegate {
+    func videoVocaView(videoVocaView: VideoVocaView, didEndPlayer: Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.removeView(videoVocaView)
+            self.setupView(self.selectVocaView)
+            self.selectVocaView.resetChoiceButtonStackView() // test
+            self.selectVocaView.setupVocaQnASet()
+            self.setupNavigationBarBorderBottom()
+            self.navigationItem.title = "Voca \(self.selectVocaView.currentQnAIndex + 1) of \(VocaQnASet.MOCK_DATA.count)"
+        }
+        
     }
 }

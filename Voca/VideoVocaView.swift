@@ -11,6 +11,10 @@ import AVKit
 import Then
 import SnapKit
 
+protocol VideoVocaViewDelegate: AnyObject {
+    func videoVocaView(videoVocaView: VideoVocaView, didEndPlayer: Void)
+}
+
 final class VideoVocaView: UIView, StudyModeView {
     
     private let videoURLString: String
@@ -25,9 +29,12 @@ final class VideoVocaView: UIView, StudyModeView {
     }
     
     var seekValue = 5.0
+    weak var delegate: VideoVocaViewDelegate?
     
     private lazy var videoModuleView = VideoModuleView(videoURLString: videoURLString).then {
         $0.setupVideoPlayer()
+        $0.play()
+        $0.pause()
         $0.delegate = self
     }
     private lazy var videoSliderView = UISlider().then {
@@ -116,6 +123,12 @@ final class VideoVocaView: UIView, StudyModeView {
 }
 
 extension VideoVocaView {
+    func changeRate(to: VideoRate) {
+        videoModuleView.avPlayer?.rate = to.value
+    }
+}
+
+extension VideoVocaView {
     @objc func changeSliderValue(_ sender: UISlider) {
         guard let duration = videoModuleView.getDuration() else { return }
         
@@ -175,6 +188,6 @@ extension VideoVocaView: VideoModuleViewDelegate {
     
     func videoModuleView(moduleView: VideoModuleView, didEndPlayer: Void) {
         playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-        print(moduleView)
+        delegate?.videoVocaView(videoVocaView: self, didEndPlayer: ())
     }
 }
