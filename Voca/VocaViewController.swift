@@ -39,6 +39,11 @@ final class VocaViewController: UIViewController {
             videoVocaView.changeRate(to: currentVideoRate)
         }
     }
+    var currentVideSeekTime: VideoSeekTime = .t_5 {
+        didSet {
+            videoVocaView.changeSeekTime(to: currentVideSeekTime)
+        }
+    }
 }
 
 // MARK: - Life Cycle
@@ -53,6 +58,7 @@ extension VocaViewController {
 extension VocaViewController {
     @objc func didTapSettingBarButton() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
         let rateAction = UIAlertAction(title: "재생 속도 \(currentVideoRate.text)", style: .default) { _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
@@ -69,10 +75,27 @@ extension VocaViewController {
             
             self.present(alert, animated: true)
         }
+        let seekTimeAction = UIAlertAction(title: "구간 탐색 \(currentVideSeekTime.text)초", style: .default) { _ in
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            VideoSeekTime.allCases.forEach { seekTime in
+                let action = UIAlertAction(title: seekTime.text + "초", style: .default) { _ in
+                    self.currentVideSeekTime = seekTime
+                }
+                alert.addAction(action)
+            }
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+            
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true)
+        }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         
         [
             rateAction,
+            seekTimeAction,
             cancelAction
         ].forEach {
             alertController.addAction($0)

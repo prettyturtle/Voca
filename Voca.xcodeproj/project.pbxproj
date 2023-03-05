@@ -33,6 +33,7 @@
 		6B29BDA429AE698900F39932 /* VideoVocaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDA329AE698900F39932 /* VideoVocaView.swift */; };
 		6B29BDA629AF458900F39932 /* VideoModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDA529AF458900F39932 /* VideoModuleView.swift */; };
 		6B29BDA829B3737300F39932 /* VideoRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDA729B3737300F39932 /* VideoRate.swift */; };
+		6B29BDAA29B4B2CD00F39932 /* VideoSeekTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDA929B4B2CD00F39932 /* VideoSeekTime.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		6B29BDA329AE698900F39932 /* VideoVocaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVocaView.swift; sourceTree = "<group>"; };
 		6B29BDA529AF458900F39932 /* VideoModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModuleView.swift; sourceTree = "<group>"; };
 		6B29BDA729B3737300F39932 /* VideoRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRate.swift; sourceTree = "<group>"; };
+		6B29BDA929B4B2CD00F39932 /* VideoSeekTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSeekTime.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 				6B29BD3029A92ADA00F39932 /* VocaViewController.swift */,
 				6B29BD6829AA186B00F39932 /* SelectVocaView.swift */,
 				6B29BDA729B3737300F39932 /* VideoRate.swift */,
+				6B29BDA929B4B2CD00F39932 /* VideoSeekTime.swift */,
 				6B29BDA329AE698900F39932 /* VideoVocaView.swift */,
 				6B29BD7529AA870700F39932 /* ResultVocaView.swift */,
 				6B29BDA529AF458900F39932 /* VideoModuleView.swift */,
@@ -331,6 +334,7 @@
 				6B29BD2D29A92ADA00F39932 /* AppDelegate.swift in Sources */,
 				6B29BDA429AE698900F39932 /* VideoVocaView.swift in Sources */,
 				6B29BD6F29AA605F00F39932 /* ChoiceButton.swift in Sources */,
+				6B29BDAA29B4B2CD00F39932 /* VideoSeekTime.swift in Sources */,
 				6B29BD7829AB7E5C00F39932 /* ResultVocaTableViewCell.swift in Sources */,
 				6B29BD5D29A92F1D00F39932 /* IntroView.swift in Sources */,
 				6B29BD6529A9300900F39932 /* EpisodeType.swift in Sources */,

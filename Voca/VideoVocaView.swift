@@ -125,6 +125,12 @@ final class VideoVocaView: UIView, StudyModeView {
 extension VideoVocaView {
     func changeRate(to: VideoRate) {
         videoModuleView.avPlayer?.rate = to.value
+        
+        // TODO: - rate 변경시 재생되는 이슈 수정
+    }
+    
+    func changeSeekTime(to: VideoSeekTime) {
+        seekValue = to.value
     }
 }
 
