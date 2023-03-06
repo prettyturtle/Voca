@@ -75,12 +75,13 @@ final class VideoModuleView: UIView {
         avPlayerLayer.frame = bounds
     }
     
-    func play() {
+    func play(rate: Float) {
         guard let avPlayer = avPlayer else {
             delegate?.videoModuleView(moduleView: self, occurAnyError: .setupVideoPlayerFail)
             return
         }
         avPlayer.play()
+        avPlayer.rate = rate
     }
     
     func pause() {

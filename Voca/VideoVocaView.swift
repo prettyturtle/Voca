@@ -29,12 +29,11 @@ final class VideoVocaView: UIView, StudyModeView {
     }
     
     var seekValue = 5.0
+    var rate: Float = 1.0
     weak var delegate: VideoVocaViewDelegate?
     
     private lazy var videoModuleView = VideoModuleView(videoURLString: videoURLString).then {
         $0.setupVideoPlayer()
-        $0.play()
-        $0.pause()
         $0.delegate = self
     }
     private lazy var videoSliderView = UISlider().then {
@@ -125,8 +124,11 @@ final class VideoVocaView: UIView, StudyModeView {
 extension VideoVocaView {
     func changeRate(to: VideoRate) {
         videoModuleView.avPlayer?.rate = to.value
+        rate = to.value
         
-        // TODO: - rate 변경시 재생되는 이슈 수정
+        if videoModuleView.avPlayer?.timeControlStatus == .waitingToPlayAtSpecifiedRate {
+            videoModuleView.pause()
+        }
     }
     
     func changeSeekTime(to: VideoSeekTime) {
@@ -157,7 +159,7 @@ extension VideoVocaView {
         switch videoStatus {
         case .paused:
             sender.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            videoModuleView.play()
+            videoModuleView.play(rate: rate)
         case .playing:
             sender.setImage(UIImage(systemName: "play.fill"), for: .normal)
             videoModuleView.pause()
