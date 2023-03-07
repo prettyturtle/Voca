@@ -34,6 +34,7 @@
 		6B29BDA629AF458900F39932 /* VideoModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDA529AF458900F39932 /* VideoModuleView.swift */; };
 		6B29BDA829B3737300F39932 /* VideoRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDA729B3737300F39932 /* VideoRate.swift */; };
 		6B29BDAA29B4B2CD00F39932 /* VideoSeekTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDA929B4B2CD00F39932 /* VideoSeekTime.swift */; };
+		6B29BDAC29B7658E00F39932 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDAB29B7658E00F39932 /* Icon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		6B29BDA529AF458900F39932 /* VideoModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModuleView.swift; sourceTree = "<group>"; };
 		6B29BDA729B3737300F39932 /* VideoRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRate.swift; sourceTree = "<group>"; };
 		6B29BDA929B4B2CD00F39932 /* VideoSeekTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSeekTime.swift; sourceTree = "<group>"; };
+		6B29BDAB29B7658E00F39932 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				6B29BDA929B4B2CD00F39932 /* VideoSeekTime.swift */,
 				6B29BDA329AE698900F39932 /* VideoVocaView.swift */,
 				6B29BD7529AA870700F39932 /* ResultVocaView.swift */,
+				6B29BDAB29B7658E00F39932 /* Icon.swift */,
 				6B29BDA529AF458900F39932 /* VideoModuleView.swift */,
 				6B29BD7929AB7E7600F39932 /* CellIdentifiable.swift */,
 				6B29BD7729AB7E5C00F39932 /* ResultVocaTableViewCell.swift */,
@@ -342,6 +345,7 @@
 				6B29BD6929AA186B00F39932 /* SelectVocaView.swift in Sources */,
 				6B29BD7629AA870700F39932 /* ResultVocaView.swift in Sources */,
 				6B29BD6B29AA4A7A00F39932 /* VocaQnASet.swift in Sources */,
+				6B29BDAC29B7658E00F39932 /* Icon.swift in Sources */,
 				6B29BDA829B3737300F39932 /* VideoRate.swift in Sources */,
 				6B29BD6729A9331900F39932 /* AlphaButton.swift in Sources */,
 				6B29BD2F29A92ADA00F39932 /* SceneDelegate.swift in Sources */,
