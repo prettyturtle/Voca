@@ -35,7 +35,7 @@ final class ResultVocaTableViewCell: UITableViewCell, CellIdentifiable {
     }
     private lazy var standardPlayButton = UIButton().then {
         $0.tintColor = .secondaryLabel
-        $0.setImage(UIImage(systemName: "speaker.wave.2"), for: .normal)
+        $0.setImage(Icon.speakerWave2.image, for: .normal)
         $0.addTarget(self, action: #selector(didTapStandardPlayButton), for: .touchUpInside)
     }
     private lazy var correctMarkImageView = UIImageView().then {
@@ -44,8 +44,8 @@ final class ResultVocaTableViewCell: UITableViewCell, CellIdentifiable {
     }
     
     static func setupIsPlayingStandard(isPlaying: Bool, button: UIButton) {
-        let imageName = isPlaying ? "speaker.wave.2.fill" : "speaker.wave.2"
-        button.setImage(UIImage(systemName: imageName), for: .normal)
+        let icon = isPlaying ? Icon.speakerWave2Fill : Icon.speakerWave2
+        button.setImage(icon.image, for: .normal)
         button.tintColor = isPlaying ? .systemOrange : .secondaryLabel
     }
     
@@ -55,13 +55,13 @@ final class ResultVocaTableViewCell: UITableViewCell, CellIdentifiable {
         
         switch resultItem.isSolved {
         case .right:
-            correctMarkImageView.image = UIImage(systemName: "circle")
+            correctMarkImageView.image = Icon.circle.image
             correctMarkImageView.tintColor = .systemGreen
         case .wrong:
-            correctMarkImageView.image = UIImage(systemName: "xmark")
+            correctMarkImageView.image = Icon.xmark.image
             correctMarkImageView.tintColor = .systemRed
         case .none:
-            correctMarkImageView.image = UIImage(systemName: "triangle")
+            correctMarkImageView.image = Icon.triangle.image
             correctMarkImageView.tintColor = .systemYellow
         }
     }

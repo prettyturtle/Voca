@@ -114,7 +114,7 @@ extension VocaViewController {
     }
     func setupNavigationBarButton() {
         let settingBarButton = UIBarButtonItem(
-            image: UIImage(systemName: "ellipsis"),
+            image: Icon.ellipsis.image,
             style: .plain,
             target: self,
             action: #selector(didTapSettingBarButton)

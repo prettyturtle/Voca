@@ -49,17 +49,17 @@ final class VideoVocaView: UIView, StudyModeView {
         $0.font = .systemFont(ofSize: 16.0, weight: .medium)
     }
     private lazy var playButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        $0.setImage(Icon.playFill.image, for: .normal)
         $0.tintColor = .label
         $0.addTarget(self, action: #selector(didTapPlayButton), for: .touchUpInside)
     }
     private lazy var prevSeekButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "backward.end.fill"), for: .normal)
+        $0.setImage(Icon.backwardEndFill.image, for: .normal)
         $0.tintColor = .label
         $0.addTarget(self, action: #selector(didTapSeekButton), for: .touchUpInside)
     }
     private lazy var nextSeekButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "forward.end.fill"), for: .normal)
+        $0.setImage(Icon.forwardEndFill.image, for: .normal)
         $0.tintColor = .label
         $0.addTarget(self, action: #selector(didTapSeekButton), for: .touchUpInside)
     }
@@ -158,10 +158,10 @@ extension VideoVocaView {
         
         switch videoStatus {
         case .paused:
-            sender.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            sender.setImage(Icon.pauseFill.image, for: .normal)
             videoModuleView.play(rate: rate)
         case .playing:
-            sender.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            sender.setImage(Icon.playFill.image, for: .normal)
             videoModuleView.pause()
         default:
             return
@@ -195,7 +195,7 @@ extension VideoVocaView: VideoModuleViewDelegate {
     }
     
     func videoModuleView(moduleView: VideoModuleView, didEndPlayer: Void) {
-        playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        playButton.setImage(Icon.playFill.image, for: .normal)
         delegate?.videoVocaView(videoVocaView: self, didEndPlayer: ())
     }
 }

@@ -50,11 +50,11 @@ final class ChoiceButton: UIButton {
     }
     
     func setupCheckedView(isRight: Bool) {
-        let imageName = isRight ? "checkmark.circle.fill" : "xmark.circle.fill"
+        let icon = isRight ? Icon.checkmarkCircleFill : Icon.xmarkCircleFill
         let imageColor: UIColor = isRight ? .systemGreen : .systemRed
         let borderColor: CGColor = isRight ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
         
-        resultIconImageView.image = UIImage(systemName: imageName)
+        resultIconImageView.image = icon.image
         resultIconImageView.tintColor = imageColor
         layer.borderColor = borderColor
         layer.borderWidth = 1.0
